@@ -150,6 +150,9 @@ the configuration (without a prefix: ``Auto``).
 **AccessModifierOffset** (``int``)
   The extra indent or outdent of access modifiers, e.g. ``public:``.
 
+**AdditionalIndentClassBlock** (``bool``)
+  If ``true``, adds an additional level of indention for class blocks.
+
 **AlignAfterOpenBracket** (``BracketAlignmentStyle``)
   If ``true``, horizontally aligns arguments after an open bracket.
 
