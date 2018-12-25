@@ -531,7 +531,7 @@ size_t UnwrappedLineParser::computePPHash() const {
 }
 
 void UnwrappedLineParser::parseBlock(bool MustBeDeclaration, bool AddLevel,
-                                     bool MunchSemi) {
+                                     bool MunchSemi, bool ClassBlock) {
   assert(FormatTok->isOneOf(tok::l_brace, TT_MacroBlockBegin) &&
          "'{' or macro block token expected");
   const bool MacroBlock = FormatTok->is(TT_MacroBlockBegin);
@@ -556,6 +556,9 @@ void UnwrappedLineParser::parseBlock(bool MustBeDeclaration, bool AddLevel,
   ScopedDeclarationState DeclarationState(*Line, DeclarationScopeStack,
                                           MustBeDeclaration);
   if (AddLevel)
+    ++Line->Level;
+
+  if (Style.AdditionalIndentClassBlock && ClassBlock)
     ++Line->Level;
   parseLevel(/*HasOpeningBrace=*/true);
 
@@ -2226,7 +2229,7 @@ void UnwrappedLineParser::parseRecord(bool ParseAsExpr) {
         addUnwrappedLine();
 
       parseBlock(/*MustBeDeclaration=*/true, /*AddLevel=*/true,
-                 /*MunchSemi=*/false);
+                 /*MunchSemi=*/false, /*ClassBlock*/ true);
     }
   }
   // There is no addUnwrappedLine() here so that we fall through to parsing a

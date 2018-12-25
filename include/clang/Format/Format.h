@@ -50,6 +50,9 @@ struct FormatStyle {
   /// The extra indent or outdent of access modifiers, e.g. ``public:``.
   int AccessModifierOffset;
 
+  /// If ``true``, adds an additional level of indention for class blocks
+  bool AdditionalIndentClassBlock;
+
   /// Different styles for aligning after open brackets.
   enum BracketAlignmentStyle {
     /// Align parameters on the open bracket, e.g.:
@@ -1938,7 +1941,8 @@ struct FormatStyle {
   UseTabStyle UseTab;
 
   bool operator==(const FormatStyle &R) const {
-    return AccessModifierOffset == R.AccessModifierOffset &&
+    return AdditionalIndentClassBlock == R.AdditionalIndentClassBlock &&
+           AccessModifierOffset == R.AccessModifierOffset &&
            AlignAfterOpenBracket == R.AlignAfterOpenBracket &&
            AlignConsecutiveAssignments == R.AlignConsecutiveAssignments &&
            AlignConsecutiveDeclarations == R.AlignConsecutiveDeclarations &&
